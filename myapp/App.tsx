@@ -1,5 +1,6 @@
+import React, {useState} from 'react';
 // Componentes utilizados para construir a página, importados do React Native
-import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity } from 'react-native';
 // Componente StatusBar serve para configurar a barrinha superior da tela (Experimente trocar o style 'dark' por 'light')
 import { StatusBar } from 'expo-status-bar';
 
@@ -8,23 +9,45 @@ import { StatusBar } from 'expo-status-bar';
 O return só pode retornar um único componente (<View>), que é 
 uma div gigante que funcionacomo o elemento <html> */
 export default function App() {
+  /* NOTA IMPORTANTE: A alteração de estilo de componentes de forma DINÂMICA 
+  em React Native é feita através da mudança de ESTADO ao invés de variáveis comuns, 
+  nesse caso é utilizado o useState para criar o estado isActive (padrão false) 
+  e a função setIsActive para alterá-lo. */
+  const [isActive, setIsActive] = useState(false);
+  function handlePress() {
+    setIsActive((oldValue:boolean) =>{
+      return !oldValue;
+    });
+    console.log(isActive);
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={isActive ? styles.containerOn : styles.containerOff}>
       {/* Comentários dentro do componente view principal são
        tratados como objeto, ou seja, é obrigatório as ASPAS! */}
-      <TextInput>Escreva aqui!</TextInput>
-      <Text>Hello, World!</Text>
-      <Image source={require('./assets/favicon.png')}></Image>
+      <Text style={isActive? {color: 'white'} : {color: 'black'}}>Troca de estado com React Native</Text>
+      <Text style={isActive? {color: 'white'} : {color: 'black'}}>Dica: Clique no coração!</Text>
+
+      {/* Recomendado utilizar requier() ao invés de importar o arquivo*/}
+      <TouchableOpacity onPress={handlePress}>
+        <Image source={isActive ? require('./assets/coracaovermelho.png') : require('./assets/coracaovazio.png')}></Image>
+      </TouchableOpacity>
       <StatusBar style="dark" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerOn: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  containerOff: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
