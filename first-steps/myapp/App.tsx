@@ -1,7 +1,7 @@
 // Hook utilizado para realizar a troca de estado de um componente
 import React, {useState} from 'react';
 // Componentes utilizados para construir a página, importados do React Native
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 // Componente StatusBar serve para configurar a barrinha superior da tela (Experimente trocar o style 'dark' por 'light')
 import { StatusBar } from 'expo-status-bar';
 
@@ -21,7 +21,7 @@ export default function App() {
   - useState: declaração do hook;
   - false: valor padrão da variável;*/
   const [isActive, setIsActive] = useState(false);
-  
+
   // callback: função anônima dentro de setIsActive() dentro de handlePress()
   function handlePress() {
     setIsActive((oldValue:boolean) => { 
